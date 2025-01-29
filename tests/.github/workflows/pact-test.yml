@@ -1,0 +1,32 @@
+name: Pact Contract Testing
+
+on:
+  push:
+    branches:
+      - main      # ou a branch que você está usando
+  pull_request:
+    branches:
+      - main      # ou a branch que você está usando
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # ou o sistema operacional desejado
+
+    steps:
+      # Passo 1: Check out do repositório
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      # Passo 2: Instalar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # ou a versão que você usa no seu projeto
+
+      # Passo 3: Instalar as dependências do projeto
+      - name: Install dependencies
+        run: npm install
+
+      # Passo 4: Rodar os testes de contrato Pact
+      - name: Run Pact tests
+        run: npx jest tests/contract/consumer.test.js # ou o caminho do seu teste de contrato
